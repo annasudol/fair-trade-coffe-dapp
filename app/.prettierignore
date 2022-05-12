@@ -1,0 +1,7 @@
+node_modules
+.next
+public/service-worker.js*
+public/workbox-*.js*
+coverage
+postcss.config.js
+utils
