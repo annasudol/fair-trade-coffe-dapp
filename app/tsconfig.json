@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@components": ["src/components"],
+      "@hooks/*": ["src/hooks/*"],
+      "@hooks": ["src/hooks"],
+      "@public/*": ["public/*"],
+      "@public": ["public"],
+      "@config/*": ["src/config/*"],
+      "@config": ["src/config/"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils/"],
+      "@layout/*": ["src/layout/*"],
+      "@layout": ["src/layout/"],
+      "@types/*": ["src/types/*"],
+      "@types": ["src/types"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "scripts/createKeyPair.mts"],
+  "exclude": ["node_modules"]
+}
