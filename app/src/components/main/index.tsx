@@ -5,7 +5,7 @@ import * as React from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const Main = () => {
-  const { user, isInitContract, tradeList, harvestCoffee } = React.useContext(WalletSolContext) as WalletSolContextType;
+  const { user, tradeList, harvestCoffee } = React.useContext(WalletSolContext) as WalletSolContextType;
   const onHarvestCoffee = async () => {
     try {
       const userID = user?.id;

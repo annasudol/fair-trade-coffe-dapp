@@ -49,6 +49,17 @@ pub mod fair_trade_coffee {
         trade_account.current_id = product_account.key();
         Ok(())
     }
+
+    pub fn process_coffee(ctx: Context<ProcessCoffee>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "farmer" {
+            return Err(error!(ErrorCode::OnlyFarmerCanHarvestCoffee));
+        };
+        let product_account = &mut ctx.accounts.product_account;
+
+        product_account.status = ProductStatus::Processed;
+
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -83,6 +94,15 @@ pub struct RegisterTrade<'info> {
     pub authority: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
+
+#[derive(Accounts)]
+pub struct ProcessCoffee<'info> {
+    #[account(mut)]
+    pub product_account: Account<'info, ProductState>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+}
+
 
 #[account]
 pub struct TradeState {

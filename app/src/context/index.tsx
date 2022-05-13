@@ -18,6 +18,7 @@ export type WalletSolContextType = {
   signUpUser: (role: Role) => Promise<string | undefined>;
   harvestCoffee: (role: Role) => Promise<string | undefined>;
   tradeList?: TradeCardData[];
+  processCoffee: (role: Role, productId: string) => Promise<string | undefined>;
 };
 
 export const WalletSolContext = React.createContext<WalletSolContextType | null>(null);
@@ -86,6 +87,37 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
             });
           }
         }
+      }
+    }
+  };
+
+  const processCoffee = async (role: Role, productId: string) => {
+    if (user) {
+      const program = getProgram();
+      const provider = getProvider();
+
+      try {
+        const txid = await program.rpc.processCoffee(role.toLocaleLowerCase(), {
+          accounts: {
+            authority: provider.wallet.publicKey,
+            productAccount: new PublicKey(productId),
+          },
+        });
+        const product = await getProductById(new PublicKey(productId));
+
+        const list = tradeList.filter((item) => item.id !== productId);
+        setTradeList([product as unknown as TradeCardData, ...list]);
+        notify({
+          type: "success",
+          message: "Processed coffee",
+          txid,
+        });
+        return txid;
+      } catch (e) {
+        notify({
+          type: "error",
+          message: "Error with harvest coffee",
+        });
       }
     }
   };
@@ -189,7 +221,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         if (initAccountKey) trade = await fetchTrade(initAccountKey);
         setIsInitContract(!trade);
       } catch (err) {
-        console.log(err, "err");
+        console.log(err);
         notify({
           type: "error",
           message: "Error with get user",
@@ -200,7 +232,9 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   }, [fetchUser, walletAddress]);
 
   return (
-    <WalletSolContext.Provider value={{ user, isInitContract, initContract, signUpUser, harvestCoffee, tradeList }}>
+    <WalletSolContext.Provider
+      value={{ user, isInitContract, initContract, signUpUser, harvestCoffee, tradeList, processCoffee }}
+    >
       {children}
     </WalletSolContext.Provider>
   );
