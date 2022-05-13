@@ -6,7 +6,7 @@ import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const Main = () => {
   const { user, isInitContract, tradeList, createTrade } = React.useContext(WalletSolContext) as WalletSolContextType;
-  const onCreatePost = async () => {
+  const onCreateTrade = async () => {
     try {
       const userID = user?.id;
       if (userID) {
@@ -30,7 +30,7 @@ export const Main = () => {
       {isInitContract === false && (
         <div>
           <div>
-            {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onCreatePost} />}
+            {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onCreateTrade} />}
             {tradeList?.length === 0 ? (
               <p className="text-black py-4 text-center">No trades to display</p>
             ) : (
