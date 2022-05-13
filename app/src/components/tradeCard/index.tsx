@@ -61,6 +61,38 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
           buy coffee
         </Button>
       )}
+      {user?.role === Role.retailer && status === ProductStatus.sold && (
+        <Button
+          classes="my-4"
+          onClick={() =>
+            changeContract(
+              user?.role,
+              id,
+              "packCoffee",
+              "Coffee has been packed successfully",
+              "Error, please try later"
+            )
+          }
+        >
+          pack coffee
+        </Button>
+      )}
+      {user?.role === Role.retailer && status === ProductStatus.packed && (
+        <Button
+          classes="my-4"
+          onClick={() =>
+            changeContract(
+              user?.role,
+              id,
+              "shipCoffee",
+              "Coffee has been shipped successfully",
+              "Error, please try later"
+            )
+          }
+        >
+          ship coffee
+        </Button>
+      )}
     </div>
   );
 };

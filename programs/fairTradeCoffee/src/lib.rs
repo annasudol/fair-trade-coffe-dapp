@@ -35,7 +35,7 @@ pub mod fair_trade_coffee {
 
     pub fn harvest_coffee(ctx: Context<RegisterTrade>, role: String) -> anchor_lang::Result<()> {
         if role.to_lowercase().as_str() != "farmer" {
-            return Err(error!(ErrorCode::OnlyFarmerCanHarvestCoffee));
+            return Err(error!(ErrorCode::UserIsNotAFarmer));
         };
         let trade_account = &mut ctx.accounts.trade_account;
         let product_account = &mut ctx.accounts.product_account;
@@ -52,7 +52,7 @@ pub mod fair_trade_coffee {
 
     pub fn process_coffee(ctx: Context<ProcessCoffee>, role: String) -> anchor_lang::Result<()> {
         if role.to_lowercase().as_str() != "farmer" {
-            return Err(error!(ErrorCode::OnlyFarmerCanHarvestCoffee));
+            return Err(error!(ErrorCode::UserIsNotAFarmer));
         };
         let product_account = &mut ctx.accounts.product_account;
 
@@ -61,9 +61,9 @@ pub mod fair_trade_coffee {
         Ok(())
     }
 
-    pub fn set_for_sale_coffee(ctx: Context<ForSale>, role: String) -> anchor_lang::Result<()> {
+    pub fn set_for_sale_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
         if role.to_lowercase().as_str() != "retailer" {
-            return Err(error!(ErrorCode::OnlyRetailerCanSellCoffee));
+            return Err(error!(ErrorCode::UserIsNotRetailer));
         };
         let product_account = &mut ctx.accounts.product_account;
 
@@ -72,12 +72,30 @@ pub mod fair_trade_coffee {
         Ok(())
     }
 
-    pub fn buy_coffee(ctx: Context<BuyCoffee>, role: String) -> anchor_lang::Result<()> {
+    pub fn buy_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
         if role.to_lowercase().as_str() != "consumer" {
-            return Err(error!(ErrorCode::OnlyConsumerCanBuyCoffee));
+            return Err(error!(ErrorCode::UserIsNoBuyer));
         };
         let product_account = &mut ctx.accounts.product_account;
         product_account.status = ProductStatus::Sold;
+        Ok(())
+    }
+
+    pub fn pack_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "retailer" {
+            return Err(error!(ErrorCode::UserIsNotRetailer));
+        };
+        let product_account = &mut ctx.accounts.product_account;
+        product_account.status = ProductStatus::Packed;
+        Ok(())
+    }
+
+    pub fn ship_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "retailer" {
+            return Err(error!(ErrorCode::UserIsNotRetailer));
+        };
+        let product_account = &mut ctx.accounts.product_account;
+        product_account.status = ProductStatus::Shipped;
         Ok(())
     }
 }
@@ -124,21 +142,12 @@ pub struct ProcessCoffee<'info> {
 }
 
 #[derive(Accounts)]
-pub struct ForSale<'info> {
+pub struct ChangeContract<'info> {
     #[account(mut)]
     pub product_account: Account<'info, ProductState>,
     #[account(mut)]
     pub authority: Signer<'info>,
 }
-
-#[derive(Accounts)]
-pub struct BuyCoffee<'info> {
-    #[account(mut)]
-    pub product_account: Account<'info, ProductState>,
-    #[account(mut)]
-    pub authority: Signer<'info>,
-}
-
 
 #[account]
 pub struct TradeState {
@@ -179,10 +188,7 @@ pub enum AccountType {
 
 #[error_code]
 pub enum ErrorCode {
-    #[msg("Wrong user role, only farmer can harvest coffee")]
-    OnlyFarmerCanHarvestCoffee,
-    #[msg("Wrong user role, only retailer can sell coffee")]
-    OnlyRetailerCanSellCoffee,
-    #[msg("Wrong user role, only consumer can buy coffee")]
-    OnlyConsumerCanBuyCoffee,
+    UserIsNotAFarmer,
+    UserIsNotRetailer,
+    UserIsNoBuyer,
 }
