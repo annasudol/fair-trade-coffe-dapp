@@ -25,7 +25,6 @@ pub mod fair_trade_coffee {
 
         let user_role = match role.to_lowercase().as_str()  {
             "consumer" => AccountType::Consumer,
-            "distributor" => AccountType::Distributor,
             "farmer" => AccountType::Farmer,
             "retailer" => AccountType::Retailer,
             _ => panic!("UserRoleDoNotMatch")
@@ -35,7 +34,10 @@ pub mod fair_trade_coffee {
         Ok(())
     }
 
-    pub fn harvest_coffee(ctx: Context<RegisterTrade>) -> ProgramResult {
+    pub fn harvest_coffee(ctx: Context<RegisterTrade>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "farmer" {
+            return Err(error!(ErrorCode::OnlyFarmerCanHarvestCoffee));
+        };
         let trade_account = &mut ctx.accounts.trade_account;
         let product_account = &mut ctx.accounts.product_account;
         let user_account = &mut ctx.accounts.user_account;
@@ -99,14 +101,14 @@ pub struct ProductState {
 
 #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Eq)]
 pub enum ProductStatus {
-    Harvested,
-    Processed,
-    Packed,
-    ForSale,
-    Sold,
-    Shipped,
-    Received,
-    Purchased,
+    Harvested, // Farmer 1
+    Processed, // Farmer 2
+    ForSale, // Retailer 3
+    Sold, // Retailer 4
+    Packed, // Retailer 5
+    Purchased, //customer 6
+    Shipped, //Retailer 7
+    Received, //customer 8
 }
 
 #[account]
@@ -118,13 +120,12 @@ pub struct UserState {
 #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Eq)]
 pub enum AccountType {
     Consumer,
-    Distributor,
     Farmer,
     Retailer,
 }
 
-
 #[error_code]
-pub enum Trade {
-    UserRoleDoNotMatch,
+pub enum ErrorCode {
+    #[msg("Wrong user role, only farmer can harvest coffee")]
+    OnlyFarmerCanHarvestCoffee,
 }
