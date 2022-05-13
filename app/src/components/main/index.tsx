@@ -5,12 +5,12 @@ import * as React from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const Main = () => {
-  const { user, isInitContract, tradeList, createTrade } = React.useContext(WalletSolContext) as WalletSolContextType;
+  const { user, isInitContract, tradeList, harverstCoffee } = React.useContext(WalletSolContext) as WalletSolContextType;
   const onCreateTrade = async () => {
     try {
       const userID = user?.id;
       if (userID) {
-        const tx = await createTrade(user.role);
+        const tx = await harverstCoffee(user.role);
         tx &&
           notify({
             type: "success",

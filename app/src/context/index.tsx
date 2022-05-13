@@ -16,7 +16,7 @@ export type WalletSolContextType = {
   isInitContract?: boolean;
   initContract?: () => Promise<TypeDef<IdlTypeDef, IdlTypes<Idl>> | undefined>;
   signUpUser: (role: Role) => Promise<string | undefined>;
-  createTrade: (role: Role) => Promise<string | undefined>;
+  harverstCoffee: (role: Role) => Promise<string | undefined>;
   tradeList?: TradeCardData[];
 };
 
@@ -59,7 +59,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const createTrade = async (role: Role) => {
+  const harvestCoffee = async (role: Role) => {
     if (walletAddress && user) {
       const { initAccountKey } = getKeys();
       if (initAccountKey?.publicKey) {
@@ -69,7 +69,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           try {
             const accountKey = Keypair.generate();
 
-            const tx = await program.rpc.registerTrade(role.toLocaleLowerCase(), {
+            const tx = await program.rpc.harvestCoffee(role.toLocaleLowerCase(), {
               accounts: {
                 tradeAccount: initAccountKey.publicKey,
                 authority: provider.wallet.publicKey,
@@ -197,7 +197,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   }, [fetchUser, walletAddress]);
 
   return (
-    <WalletSolContext.Provider value={{ user, isInitContract, initContract, signUpUser, createTrade, tradeList }}>
+    <WalletSolContext.Provider value={{ user, isInitContract, initContract, signUpUser, harverstCoffee, tradeList }}>
       {children}
     </WalletSolContext.Provider>
   );
