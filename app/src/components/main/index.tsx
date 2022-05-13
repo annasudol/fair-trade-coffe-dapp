@@ -1,4 +1,5 @@
 import { RegisterTradeForm, TradeCard } from "@components";
+import { Role } from "@types";
 import { notify } from "@utils";
 import * as React from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
@@ -26,12 +27,20 @@ export const Main = () => {
   };
   return (
     <main>
-      {isInitContract === false && <RegisterTradeForm onSubmit={onCreatePost} />}
-      <div className="grid sm:grid-cols-3 sm:space-x-2 sm: space-x-3 md:grid-cols-4 lg:grid-cols-6">
-        {tradeList?.map(({ id, status, user, preId }) => (
-          <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
-        ))}
-      </div>
+      {isInitContract === false && (
+        <div>
+          <div>
+            {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onCreatePost} />}
+            {tradeList?.length === 0 ? (
+              <p className="text-black py-4 text-center">No trades to display</p>
+            ) : (
+              tradeList?.map(({ id, status, user, preId }) => (
+                <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
+              ))
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 };

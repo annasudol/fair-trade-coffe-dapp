@@ -48,7 +48,6 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         });
         const user = await getUser(program, walletAddress);
         user && setUser(user);
-        setIsInitContract(true);
         return tx;
       } catch (e) {
         notify({
@@ -123,6 +122,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
 
         const trade = await program.account.tradeState.fetch(initAccountKey.publicKey);
         if (trade) {
+          setIsInitContract(false);
           notify({
             type: "success",
             message: "Created init trade",
@@ -145,9 +145,11 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
       const product = await getProductById(id);
 
       if (product) {
-        if (tradeList.length === 0 || !tradeList.some((item) => item.id === product.id)) {
-          setTradeList((products) => [...products, product as unknown as TradeCardData]);
-          if (product.preId !== "11111111111111111111111111111111") await fetchProducts(new PublicKey(product.preId));
+        if (product.preId !== "11111111111111111111111111111111") {
+          if (tradeList.length === 0 || !tradeList.some((item) => item.id === product.id)) {
+            setTradeList((products) => [...products, product as unknown as TradeCardData]);
+            await fetchProducts(new PublicKey(product.preId));
+          }
         }
       }
     } catch (e) {
@@ -167,7 +169,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
       setIsInitContract(true);
       notify({
         type: "error",
-        message: "Please create initial blog",
+        message: "Please create initial contract",
       });
     }
   }, []);
@@ -176,12 +178,13 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
     const onGetUser = async (walletAddress: string) => {
       try {
         const user = await fetchUser(walletAddress);
-        if (user) {
+        // if (user) {
           const { initAccountKey } = getKeys();
           let trade;
           if (initAccountKey) trade = await fetchTrade(initAccountKey);
+        console.log(trade, "trade");
           setIsInitContract(!trade);
-        }
+        // }
       } catch (err) {
         console.log(err, "err");
         notify({

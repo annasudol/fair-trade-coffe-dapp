@@ -12,7 +12,7 @@ export const RegisterTradeForm: React.FunctionComponent<Props> = ({ onSubmit }) 
 
   return (
     <form className="w-full flex mt-8 h-14 justify-center" onSubmit={handleSubmit}>
-      <Button>Register Trade</Button>
+      <Button>Harvest Coffee</Button>
     </form>
   );
 };

@@ -40,8 +40,16 @@ export const Header: React.FunctionComponent<Props> = ({ walletAddress, connectW
             </div>
           )}
           {user === null && <SelectForm onSubmit={onSignUpUser} />}
-          {user && <p className="font-bold">Logged in as {user?.role}</p>}
-          {isInitContract && <Button onClick={() => initContract && initContract()}>Init new contract</Button>}
+          {user && (
+            <p className="font-bold py-4">
+              Logged in as <span className="uppercase">{user?.role}</span>
+            </p>
+          )}
+          {isInitContract && (
+            <Button classes="my-4" onClick={() => initContract && initContract()}>
+              Init new contract
+            </Button>
+          )}
         </>
       )}
     </header>
