@@ -1,1 +1,0 @@
-# fair-trade-coffe-dapp

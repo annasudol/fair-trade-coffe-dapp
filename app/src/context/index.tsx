@@ -38,7 +38,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
       const userAccount = getUserKey(walletAddress);
       const provider = getProvider();
       try {
-        const tx = await program.rpc.createUser("distributor", {
+        const tx = await program.rpc.createUser(role, {
           accounts: {
             authority: provider.wallet.publicKey,
             userAccount: userAccount.publicKey,
@@ -47,8 +47,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           signers: [userAccount],
         });
         const user = await getUser(program, walletAddress);
-        console.log(user, 'user')
-        // user && setUser(user);
+        user && setUser(user);
         setIsInitContract(true);
         return tx;
       } catch (e) {
@@ -71,7 +70,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           try {
             const accountKey = Keypair.generate();
 
-            const tx = await program.rpc.registerTrade(role, {
+            const tx = await program.rpc.registerTrade(role.toLocaleLowerCase(), {
               accounts: {
                 tradeAccount: initAccountKey.publicKey,
                 authority: provider.wallet.publicKey,
