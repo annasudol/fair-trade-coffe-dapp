@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult;
-
-declare_id!("5jaQfCnZAMbmt8saCVVDcC5AAQ9D29YDMrb4NSqmdEwY");
+declare_id!("ALkFKN5djQHHsJ5SYAG9KkUYDDgryLXpG79d6t2e8GPe");
 
 #[program]
 pub mod fair_trade_coffee {

@@ -5,12 +5,12 @@ import * as React from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const Main = () => {
-  const { user, isInitContract, tradeList, harverstCoffee } = React.useContext(WalletSolContext) as WalletSolContextType;
-  const onCreateTrade = async () => {
+  const { user, isInitContract, tradeList, createTrade } = React.useContext(WalletSolContext) as WalletSolContextType;
+  const onCreatePost = async () => {
     try {
       const userID = user?.id;
       if (userID) {
-        const tx = await harverstCoffee(user.role);
+        const tx = await createTrade(user.role);
         tx &&
           notify({
             type: "success",
@@ -30,7 +30,7 @@ export const Main = () => {
       {isInitContract === false && (
         <div>
           <div>
-            {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onCreateTrade} />}
+            {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onCreatePost} />}
             {tradeList?.length === 0 ? (
               <p className="text-black py-4 text-center">No trades to display</p>
             ) : (

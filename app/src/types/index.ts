@@ -6,7 +6,6 @@ export enum ACCOUNT_ERROR {
 }
 export enum Role {
   consumer = "consumer",
-  distributor = "distributor",
   farmer = "farmer",
   retailer = "retailer",
 }

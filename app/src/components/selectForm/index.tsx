@@ -12,7 +12,6 @@ type Props = {
 export const SelectForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
   const options = [
     { value: "Consumer", label: "Consumer" },
-    { value: "Distributor", label: "Distributor" },
     { value: "Farmer", label: "Farmer" },
     { value: "Retailer", label: "Retailer" },
   ];
