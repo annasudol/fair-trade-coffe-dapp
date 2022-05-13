@@ -57,7 +57,6 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const harvestCoffee = async (role: Role) => {
     if (walletAddress && user) {
       const { initAccountKey } = getKeys();
@@ -67,7 +66,6 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         if (initAccountKey) {
           try {
             const accountKey = Keypair.generate();
-
             const tx = await program.rpc.harvestCoffee(role.toLocaleLowerCase(), {
               accounts: {
                 tradeAccount: initAccountKey.publicKey,
@@ -78,13 +76,13 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
               },
               signers: [accountKey],
             });
-            const product = getProductById(accountKey.publicKey);
+            const product = await getProductById(accountKey.publicKey);
             product && setTradeList((products) => [product as unknown as TradeCardData, ...products]);
             return tx;
           } catch (e) {
             notify({
               type: "error",
-              message: "Error with creating post",
+              message: "Error with harvest coffee",
             });
           }
         }
@@ -142,7 +140,6 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   const fetchProducts = async (id: PublicKey) => {
     try {
       const product = await getProductById(id);
-
       if (product) {
         if (product.preId !== "11111111111111111111111111111111") {
           if (tradeList.length === 0 || !tradeList.some((item) => item.id === product.id)) {
@@ -152,7 +149,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         }
       }
     } catch (e) {
-      console.log(e, "e");
+      console.log(e);
     }
   };
 
@@ -203,9 +200,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   }, [fetchUser, walletAddress]);
 
   return (
-    <WalletSolContext.Provider
-      value={{ user, isInitContract, initContract, signUpUser, harvestCoffee: harvestCoffee, tradeList }}
-    >
+    <WalletSolContext.Provider value={{ user, isInitContract, initContract, signUpUser, harvestCoffee, tradeList }}>
       {children}
     </WalletSolContext.Provider>
   );
