@@ -1,4 +1,5 @@
 import { Button, ConnectWallet, SelectForm } from "@components";
+import { appConfig } from "@config/appConfig";
 import { Role } from "@types";
 import { notify, truncateAddress } from "@utils";
 import * as React from "react";
@@ -27,13 +28,14 @@ export const Header: React.FunctionComponent<Props> = ({ walletAddress, connectW
   };
   return (
     <header className="pt-8 flex flex-col items-center">
+      <h1 className="text-black pb-4">{appConfig.description}</h1>
       {!walletAddress ? (
         <ConnectWallet onClick={connectWallet} />
       ) : (
         <>
-          <h3 className="font-bold text-gray-600 capitalize">Connected: @{truncateAddress(walletAddress)}</h3>
+          <h3 className="font-bold text-xl text-gray-600 uppercase">Connected: @{truncateAddress(walletAddress)}</h3>
           {user === undefined && (
-            <div className="mt-16">
+            <div className="mt-12">
               <svg className="animate-spin h-12 w-12 text-white mr-1" viewBox="0 0 24 24">
                 <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" fill="#1d4ed8" />
               </svg>

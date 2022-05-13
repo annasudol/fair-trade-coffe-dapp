@@ -27,17 +27,15 @@ export const Main = () => {
   };
   return (
     <main>
-      <div>
-        {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onHarvestCoffee} />}
-        <div className="grid sm:grid-cols-3 sm:gap-1.5 md:grid-cols-4 mb-22">
-          {user && tradeList?.length === 0 ? (
-            <p className="text-black py-4 text-center">No trades to display</p>
-          ) : (
-            tradeList?.map(({ id, status, user, preId }) => (
-              <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
-            ))
-          )}
-        </div>
+      {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onHarvestCoffee} />}
+      <div className="grid sm:grid-cols-3 sm:gap-1.5 md:grid-cols-4 mb-22">
+        {user && tradeList?.length === 0 ? (
+          <p className="text-black py-4 text-center">No trades to display</p>
+        ) : (
+          tradeList?.map(({ id, status, user, preId }) => (
+            <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
+          ))
+        )}
       </div>
     </main>
   );
