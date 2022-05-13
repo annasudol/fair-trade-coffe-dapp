@@ -2,6 +2,7 @@ import { appConfig } from "@config";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+
 type IMetaProps = {
   title: string;
   description: string;

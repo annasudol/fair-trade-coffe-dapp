@@ -13,12 +13,10 @@ export enum Role {
 export enum ProductStatus {
   harvested = "harvested",
   processed = "processed",
-  packed = "packed",
   forSale = "forSale",
   sold = "sold",
+  packed = "packed",
   shipped = "shipped",
-  received = "received",
-  purchased = "purchased",
 }
 
 export interface UserData {

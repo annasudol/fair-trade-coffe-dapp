@@ -14,7 +14,7 @@ export const Main = () => {
         tx &&
           notify({
             type: "success",
-            message: "Signed up user successfully",
+            message: "Harvested coffee successfully",
             txid: tx as string,
           });
       }

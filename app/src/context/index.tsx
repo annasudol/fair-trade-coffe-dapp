@@ -18,7 +18,13 @@ export type WalletSolContextType = {
   signUpUser: (role: Role) => Promise<string | undefined>;
   harvestCoffee: (role: Role) => Promise<string | undefined>;
   tradeList?: TradeCardData[];
-  processCoffee: (role: Role, productId: string) => Promise<string | undefined>;
+  changeContract: (
+    role: Role,
+    productId: string,
+    rpvValue: string,
+    successMessage: string,
+    errorMessage: string
+  ) => Promise<string | undefined>;
 };
 
 export const WalletSolContext = React.createContext<WalletSolContextType | null>(null);
@@ -27,6 +33,7 @@ type Props = {
   children: React.ReactNode;
   walletAddress?: string;
 };
+
 export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => {
   const [user, setUser] = useState<UserData | null>();
   const [tradeList, setTradeList] = useState<TradeCardData[]>([]);
@@ -91,13 +98,19 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
     }
   };
 
-  const processCoffee = async (role: Role, productId: string) => {
+  const changeContract = async (
+    role: Role,
+    productId: string,
+    rpvValue: string,
+    successMessage: string,
+    errorMessage: string
+  ) => {
     if (user) {
       const program = getProgram();
       const provider = getProvider();
 
       try {
-        const txid = await program.rpc.processCoffee(role.toLocaleLowerCase(), {
+        const txid = await program.rpc[rpvValue](role.toLocaleLowerCase(), {
           accounts: {
             authority: provider.wallet.publicKey,
             productAccount: new PublicKey(productId),
@@ -109,14 +122,14 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         setTradeList([product as unknown as TradeCardData, ...list]);
         notify({
           type: "success",
-          message: "Processed coffee",
+          message: successMessage,
           txid,
         });
         return txid;
       } catch (e) {
         notify({
           type: "error",
-          message: "Error with harvest coffee",
+          message: errorMessage,
         });
       }
     }
@@ -233,7 +246,16 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
 
   return (
     <WalletSolContext.Provider
-      value={{ user, isInitContract, initContract, signUpUser, harvestCoffee, tradeList, processCoffee }}
+      value={{
+        user,
+        isInitContract,
+        initContract,
+        signUpUser,
+        harvestCoffee,
+        tradeList,
+
+        changeContract,
+      }}
     >
       {children}
     </WalletSolContext.Provider>

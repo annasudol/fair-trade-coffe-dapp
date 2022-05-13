@@ -60,6 +60,26 @@ pub mod fair_trade_coffee {
 
         Ok(())
     }
+
+    pub fn set_for_sale_coffee(ctx: Context<ForSale>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "retailer" {
+            return Err(error!(ErrorCode::OnlyRetailerCanSellCoffee));
+        };
+        let product_account = &mut ctx.accounts.product_account;
+
+        product_account.status = ProductStatus::ForSale;
+
+        Ok(())
+    }
+
+    pub fn buy_coffee(ctx: Context<BuyCoffee>, role: String) -> anchor_lang::Result<()> {
+        if role.to_lowercase().as_str() != "consumer" {
+            return Err(error!(ErrorCode::OnlyConsumerCanBuyCoffee));
+        };
+        let product_account = &mut ctx.accounts.product_account;
+        product_account.status = ProductStatus::Sold;
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -103,6 +123,22 @@ pub struct ProcessCoffee<'info> {
     pub authority: Signer<'info>,
 }
 
+#[derive(Accounts)]
+pub struct ForSale<'info> {
+    #[account(mut)]
+    pub product_account: Account<'info, ProductState>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+}
+
+#[derive(Accounts)]
+pub struct BuyCoffee<'info> {
+    #[account(mut)]
+    pub product_account: Account<'info, ProductState>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+}
+
 
 #[account]
 pub struct TradeState {
@@ -123,11 +159,9 @@ pub enum ProductStatus {
     Harvested, // Farmer 1
     Processed, // Farmer 2
     ForSale, // Retailer 3
-    Sold, // Retailer 4
+    Sold, // customer 4
     Packed, // Retailer 5
-    Purchased, //customer 6
     Shipped, //Retailer 7
-    Received, //customer 8
 }
 
 #[account]
@@ -147,4 +181,8 @@ pub enum AccountType {
 pub enum ErrorCode {
     #[msg("Wrong user role, only farmer can harvest coffee")]
     OnlyFarmerCanHarvestCoffee,
+    #[msg("Wrong user role, only retailer can sell coffee")]
+    OnlyRetailerCanSellCoffee,
+    #[msg("Wrong user role, only consumer can buy coffee")]
+    OnlyConsumerCanBuyCoffee,
 }
