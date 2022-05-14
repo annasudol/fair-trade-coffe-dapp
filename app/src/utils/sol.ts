@@ -2,7 +2,7 @@ import { Address, Idl, Program, Provider, web3 } from "@project-serum/anchor";
 import { clusterApiUrl, Commitment, Connection, PublicKey } from "@solana/web3.js";
 import { ProductStatus, Role, TradeCardData } from "@types";
 
-import idl from "../../../target/idl/fair_trade_coffee.json";
+import idl from "../../fair_trade_coffee.json";
 export const PROGRAM_KEY = new PublicKey(idl.metadata.address);
 
 type Opts = {
