@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: FC<ButtonProps> = ({ children, loading = false, disabled, classes, ...props }) => {
   disabled = disabled || loading;
   const classNames =
-    "inline-flex items-center justify-center px-6 py-2 border text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-blue-500 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 h-10";
+    "inline-flex items-center justify-center px-6 py-2 border text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-blue-500 disabled:opacity-50 focus:outline-none focus:ring-2 h-10  focus:outline-0";
   return (
     <button
       className={clsx(classes, classNames, { disabled: "opacity-60 cursor-not-allowed" })}

@@ -101,7 +101,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
   const changeContract = async (
     role: Role,
     productId: string,
-    rpvValue: string,
+    change: string,
     successMessage: string,
     errorMessage: string
   ) => {
@@ -110,7 +110,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
       const provider = getProvider();
 
       try {
-        const txid = await program.rpc[rpvValue](role.toLocaleLowerCase(), {
+        const txid = await program.rpc.changeCoffeeContract(role.toLocaleLowerCase(), change, {
           accounts: {
             authority: provider.wallet.publicKey,
             productAccount: new PublicKey(productId),

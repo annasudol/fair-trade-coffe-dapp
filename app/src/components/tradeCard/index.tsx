@@ -11,19 +11,15 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
     <div className="glass rounded-lg py-4 px-6 bg-white shadow flex flex-col mt-4">
       <h3 className="font-bold text-sm text-gray-600">ID:{id && truncateAddress(id)}</h3>
       <div className="my-1">
-        <span className="font-medium text-gray-600">Status: {status}</span>
+        <p className="font-medium text-gray-900">
+          Status: <span className="uppercase">{status}</span>
+        </p>
       </div>
       {user?.role === Role.farmer && status === ProductStatus.harvested && (
         <Button
           classes="my-4"
           onClick={() =>
-            changeContract(
-              user?.role,
-              id,
-              "processCoffee",
-              "Processed Coffee successfully",
-              "Error with process coffee"
-            )
+            changeContract(user?.role, id, "process", "Processed coffee successfully", "Error with processing coffee")
           }
         >
           Process coffee
@@ -36,9 +32,9 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
             changeContract(
               user?.role,
               id,
-              "setForSaleCoffee",
+              "forSale",
               "Set coffee for sale successfully",
-              "Error with set coffee for sale"
+              "Error with setting coffee for sale"
             )
           }
         >
@@ -52,8 +48,8 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
             changeContract(
               user?.role,
               id,
-              "buyCoffee",
-              "Coffee has been bought successfully",
+              "sold",
+              "you've just been bought coffee successfully",
               "Error with bought coffee"
             )
           }
@@ -65,13 +61,7 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
         <Button
           classes="my-4"
           onClick={() =>
-            changeContract(
-              user?.role,
-              id,
-              "packCoffee",
-              "Coffee has been packed successfully",
-              "Error, please try later"
-            )
+            changeContract(user?.role, id, "packed", "Coffee has been packed successfully", "Error, please try later")
           }
         >
           pack coffee
@@ -81,13 +71,7 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
         <Button
           classes="my-4"
           onClick={() =>
-            changeContract(
-              user?.role,
-              id,
-              "shipCoffee",
-              "Coffee has been shipped successfully",
-              "Error, please try later"
-            )
+            changeContract(user?.role, id, "shipped", "Coffee has been shipped successfully", "Error, please try later")
           }
         >
           ship coffee

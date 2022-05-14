@@ -44,7 +44,7 @@ export const Header: React.FunctionComponent<Props> = ({ walletAddress, connectW
           {user === null && <SelectForm onSubmit={onSignUpUser} />}
           {user && (
             <p className="font-bold py-4">
-              Logged in as <span className="uppercase">{user?.role}</span>
+              You are <span className="uppercase">{user?.role}</span>
             </p>
           )}
           {isInitContract && (

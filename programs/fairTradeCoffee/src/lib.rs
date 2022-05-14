@@ -50,52 +50,43 @@ pub mod fair_trade_coffee {
         Ok(())
     }
 
-    pub fn process_coffee(ctx: Context<ProcessCoffee>, role: String) -> anchor_lang::Result<()> {
-        if role.to_lowercase().as_str() != "farmer" {
-            return Err(error!(ErrorCode::UserIsNotAFarmer));
-        };
+    pub fn change_coffee_contract(ctx: Context<ChangeContract>, role: String, change: String) -> anchor_lang::Result<()> {
         let product_account = &mut ctx.accounts.product_account;
+        if change.to_lowercase().as_str() == "process" {
+            if role.to_lowercase().as_str() != "farmer" {
+                return Err(error!(ErrorCode::UserIsNotAFarmer));
+            };
+            product_account.status = ProductStatus::Processed;
+        }
 
-        product_account.status = ProductStatus::Processed;
+        if change.to_lowercase().as_str() == "forSale" {
+            if role.to_lowercase().as_str() != "retailer" {
+                return Err(error!(ErrorCode::UserIsNotRetailer));
+            };
+            product_account.status = ProductStatus::ForSale;
+        }
 
-        Ok(())
-    }
+        if change.to_lowercase().as_str() == "sold" {
+            if role.to_lowercase().as_str() != "consumer" {
+                return Err(error!(ErrorCode::UserIsNoBuyer));
+            };
+            product_account.status = ProductStatus::Sold;
+        }
 
-    pub fn set_for_sale_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
-        if role.to_lowercase().as_str() != "retailer" {
-            return Err(error!(ErrorCode::UserIsNotRetailer));
-        };
-        let product_account = &mut ctx.accounts.product_account;
+        if change.to_lowercase().as_str() == "packed" {
+            if role.to_lowercase().as_str() != "retailer" {
+                return Err(error!(ErrorCode::UserIsNotRetailer));
+            };
+            product_account.status = ProductStatus::Packed;
+        }
 
-        product_account.status = ProductStatus::ForSale;
+        if change.to_lowercase().as_str() == "shipped" {
+            if role.to_lowercase().as_str() != "retailer" {
+                return Err(error!(ErrorCode::UserIsNotRetailer));
+            };
+            product_account.status = ProductStatus::Shipped;
+        }
 
-        Ok(())
-    }
-
-    pub fn buy_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
-        if role.to_lowercase().as_str() != "consumer" {
-            return Err(error!(ErrorCode::UserIsNoBuyer));
-        };
-        let product_account = &mut ctx.accounts.product_account;
-        product_account.status = ProductStatus::Sold;
-        Ok(())
-    }
-
-    pub fn pack_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
-        if role.to_lowercase().as_str() != "retailer" {
-            return Err(error!(ErrorCode::UserIsNotRetailer));
-        };
-        let product_account = &mut ctx.accounts.product_account;
-        product_account.status = ProductStatus::Packed;
-        Ok(())
-    }
-
-    pub fn ship_coffee(ctx: Context<ChangeContract>, role: String) -> anchor_lang::Result<()> {
-        if role.to_lowercase().as_str() != "retailer" {
-            return Err(error!(ErrorCode::UserIsNotRetailer));
-        };
-        let product_account = &mut ctx.accounts.product_account;
-        product_account.status = ProductStatus::Shipped;
         Ok(())
     }
 }
