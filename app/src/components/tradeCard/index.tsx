@@ -32,7 +32,7 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
             changeContract(
               user?.role,
               id,
-              "forSale",
+              "forsale",
               "Set coffee for sale successfully",
               "Error with setting coffee for sale"
             )

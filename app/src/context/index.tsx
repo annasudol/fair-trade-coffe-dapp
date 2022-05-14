@@ -117,7 +117,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           },
         });
         const product = await getProductById(new PublicKey(productId));
-
+        console.log(product, "product");
         const list = tradeList.filter((item) => item.id !== productId);
         setTradeList([product as unknown as TradeCardData, ...list]);
         notify({

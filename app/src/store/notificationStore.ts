@@ -1,4 +1,4 @@
-import produce from "immer";
+// import produce from "immer";
 import create, { State } from "zustand";
 
 interface NotificationStore extends State {
@@ -14,7 +14,8 @@ interface NotificationStore extends State {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useNotificationStore = create<NotificationStore>((set, _get) => ({
   notifications: [],
-  set: (fn) => set(produce(fn)),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set: (fn: any) => set(fn),
 }));
 
 export default useNotificationStore;

@@ -59,7 +59,7 @@ pub mod fair_trade_coffee {
             product_account.status = ProductStatus::Processed;
         }
 
-        if change.to_lowercase().as_str() == "forSale" {
+        if change.to_lowercase().as_str() == "forsale" {
             if role.to_lowercase().as_str() != "retailer" {
                 return Err(error!(ErrorCode::UserIsNotRetailer));
             };
