@@ -44,7 +44,7 @@ npm install && npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Generate account key
-This command will generate two keypair: `initAccount-keypair.json` & genesis account-keypair.json`
+This command will generate two keypair: `initAccount-keypair.json` & `genesisAccount-keypair.json`
 
 ```bash
 yarn keygen
