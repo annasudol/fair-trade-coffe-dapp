@@ -189,12 +189,8 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
     try {
       const product = await getProductById(id);
       if (product) {
-        if (product.preId !== "11111111111111111111111111111111") {
-          if (tradeList.length === 0 || !tradeList.some((item) => item.id === product.id)) {
-            setTradeList((products) => [...products, product as unknown as TradeCardData]);
-            await fetchProducts(new PublicKey(product.preId));
-          }
-        }
+        setTradeList((products) => [...products, product as unknown as TradeCardData]);
+        !tradeList.some((item) => item.id === product.preId) && (await fetchProducts(new PublicKey(product.preId)));
       }
     } catch (e) {
       console.log(e);
