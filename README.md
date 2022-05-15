@@ -49,7 +49,7 @@ npm install && npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Select User role
-![](user_role.png.png)
+![](user_role.png)
 ## Generate account key
 
 ```bash
