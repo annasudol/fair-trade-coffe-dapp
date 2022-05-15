@@ -48,3 +48,12 @@ yarn & yarn dev
 npm install && npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Select User role
+![](README_readuser_role.png)
+
+Init new contract
+![](README_init_contract.png)
+
+To `harvest` contract and then `processed` , you need to be a farmer. Then to mark the item as `for sale` you need to retailer
+![](README_harvest.png)
