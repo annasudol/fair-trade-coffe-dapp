@@ -12,10 +12,10 @@ packed             | retailer
 shipped            | retailer
 
 ## Getting Started
-The app was built using Anchor [Anchor](https://project-serum.github.io/anchor/getting-started/introduction.html).
-The frontend was built using [Next.js](https://nextjs.org/)](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-Download Phantom wallet in your Browser extension [here](https://phantom.app/download).
-Change wallet network to `devnet`.
+The app was built using Anchor [Anchor](https://project-serum.github.io/anchor/getting-started/introduction.html).<br />
+The frontend was built using [Next.js](https://nextjs.org/)](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).<br />
+Download Phantom wallet in your Browser extension [here](https://phantom.app/download).<br />
+Change wallet network to `devnet`.<br />
 
 ## Installation
 The app was built on `devnet` network
