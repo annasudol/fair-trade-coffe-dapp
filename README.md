@@ -35,7 +35,6 @@ anchor deploy
 ```bash
 cd app
 ```
-## Run the development server
 
 ```bash
 yarn & yarn dev
