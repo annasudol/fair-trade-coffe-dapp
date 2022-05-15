@@ -64,8 +64,8 @@ To `harvest` contract and then `processed` , you need to be a farmer. Then to ma
 
 ## How the app is working
 ## Generate account key
-To start using the app, one of the user need to run function `init_trade` to create `genesis_trade_account` with `current_id`. <br/>
-Then the first Coffee Contract can be created by `harvestCoffee`. It's values can be fetch by id from previous block.
+To start using the app, one of the users needs to run the function `init_trade` to create `genesis_trade_account` with `current_id`. <br/>
+Then the first Coffee Contract can be created by `harvestCoffee`. Its values can be fetched by id from the previous block.
 
 | initTrade()  | harvestCoffee() | harvestCoffee()  |
 | :---------:  |:---------:      | :---------:      |
