@@ -51,7 +51,7 @@ yarn keygen
 #or
 npm run keygen
 ```
-
+## How to use the app
 Select User role
 ![](README_user_role.png)
 
@@ -60,3 +60,11 @@ Init new contract
 
 To `harvest` contract and then `processed` , you need to be a farmer. Then to mark the item as `for sale` you need to retailer
 ![](README_harvest.png)
+
+
+## How the app is working
+## Generate account key
+To start using the app, one of the user need to run function `init_trade` to create `genesis_trade_account` with `current_id`. <br/>
+Then the first Coffee Contract can be created by `harvestCoffee`. It's values can be fetch by id from previous block.
+![](README_blocks.png)
+
