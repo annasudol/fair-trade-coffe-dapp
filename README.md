@@ -50,7 +50,7 @@ npm install && npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Select User role
-![](README_readuser_role.png)
+![](README_user_role.png)
 
 Init new contract
 ![](README_init_contract.png)
