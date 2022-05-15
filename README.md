@@ -16,6 +16,7 @@ The app was built using Anchor [Anchor](https://project-serum.github.io/anchor/g
 The frontend was built using [Next.js](https://nextjs.org/)](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 Download Phantom wallet in your Browser extension [here](https://phantom.app/download).
 Change wallet network to `devnet`.
+
 ## Installation
 The app was built on `devnet` network
 ```bash
@@ -39,7 +40,7 @@ yarn keygen
 npm run keygen
 ```
 
-## Run the development server:
+## Run the development server
 
 ```bash
 yarn & yarn dev
@@ -49,7 +50,13 @@ npm install && npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Select User role
-![](user_role.png)
+![](README_readuser_role.png)
+
+Init new contract
+![](README_init_contract.png)
+
+To `harvest` contract and then `processed` , you need to be a farmer. Then to mark the item as `for sale` you need to retailer
+![](README_harvest.png)
 ## Generate account key
 
 ```bash
