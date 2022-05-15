@@ -14,7 +14,8 @@ shipped            | retailer
 ## Getting Started
 The app was built using Anchor [Anchor](https://project-serum.github.io/anchor/getting-started/introduction.html).
 The frontend was built using [Next.js](https://nextjs.org/)](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+Download Phantom wallet in your Browser extension [here](https://phantom.app/download).
+Change wallet network to `devnet`.
 ## Installation
 The app was built on `devnet` network
 ```bash
@@ -45,7 +46,10 @@ yarn & yarn dev
 #or
 npm install && npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+Select User role
+![](user_role.png.png)
 ## Generate account key
 
 ```bash
