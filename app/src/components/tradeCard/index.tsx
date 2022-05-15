@@ -6,7 +6,7 @@ import { FC } from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
-  const { user, changeContract } = React.useContext(WalletSolContext) as WalletSolContextType;
+  const { user, changeContract, isInitContract } = React.useContext(WalletSolContext) as WalletSolContextType;
   return (
     <div className="glass rounded-lg py-4 px-6 bg-white shadow flex flex-col mt-4">
       <h3 className="font-bold text-sm text-gray-600">ID:{id && truncateAddress(id)}</h3>
@@ -15,7 +15,7 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
           Status: <span className="uppercase">{status}</span>
         </p>
       </div>
-      {user?.role === Role.farmer && status === ProductStatus.harvested && (
+      {isInitContract === false && user?.role === Role.farmer && status === ProductStatus.harvested && (
         <Button
           classes="my-4"
           onClick={() =>
@@ -38,7 +38,7 @@ export const TradeCard: FC<TradeCardData> = ({ status, id }) => {
             )
           }
         >
-          set ready for sell
+          ready for sell
         </Button>
       )}
       {user?.role === Role.consumer && status === ProductStatus.forSale && (

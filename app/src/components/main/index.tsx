@@ -5,7 +5,7 @@ import * as React from "react";
 import { WalletSolContext, WalletSolContextType } from "src/context";
 
 export const Main = () => {
-  const { user, tradeList, harvestCoffee } = React.useContext(WalletSolContext) as WalletSolContextType;
+  const { user, tradeList, harvestCoffee, isInitContract } = React.useContext(WalletSolContext) as WalletSolContextType;
   const onHarvestCoffee = async () => {
     try {
       const userID = user?.id;
@@ -27,15 +27,17 @@ export const Main = () => {
   };
   return (
     <main>
-      {user?.role === Role.farmer && <RegisterTradeForm onSubmit={onHarvestCoffee} />}
+      {isInitContract === false && user?.role === Role.farmer && <RegisterTradeForm onSubmit={onHarvestCoffee} />}
       <div>
-        {user && tradeList?.length === 0 ? (
+        {isInitContract === false && user && tradeList?.length === 0 ? (
           <p className="text-black py-4 text-center">No trades to display</p>
         ) : (
           <div className="grid sm:grid-cols-3 sm:gap-1.5 md:grid-cols-4 mb-22">
-            {tradeList?.map(({ id, status, user, preId }) => (
-              <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
-            ))}
+            {isInitContract === false &&
+              user &&
+              tradeList?.map(({ id, status, user, preId }) => (
+                <TradeCard key={id} id={id} preId={preId} status={status} user={user} />
+              ))}
           </div>
         )}
       </div>
