@@ -2,6 +2,11 @@
 Dapp for Tracking coffee items through the Supply Chain and improving traceability of a coffee bean, from farm to consumer
 Coffee items are monitored by their status (harvested, processed, for sale, sold, packed, shipped). User's rights depend on their role (Farmer, Retailer and Consumer).
 
+Coffee trades status thought supply chain
+| #1        | #2        | #3        | #4        | #5          | #6           | #7          |
+| :--------:| :--------:|:--------: | :--------:| :--------:  | :--------:   | :--------:  |
+| harvested | processed | for sale  | sold      | sold        | packed       | shipped     |
+
 Coffee Item Status | User who ie eligible to change the Status
 ------------------ | ------------------
 harvested          | farmer
