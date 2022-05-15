@@ -45,7 +45,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
       const userAccount = getUserKey(walletAddress);
       const provider = getProvider();
       try {
-        const tx = await program.rpc.createUser(role, {
+        const tx = await program.rpc.createUser(role.toString(), {
           accounts: {
             authority: provider.wallet.publicKey,
             userAccount: userAccount.publicKey,
@@ -54,7 +54,11 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           signers: [userAccount],
         });
         const user = await getUser(program, walletAddress);
-        user && setUser(user);
+
+        if (user) {
+          setUser(user);
+          await onGetTrade();
+        }
         return tx;
       } catch (e) {
         notify({
@@ -117,7 +121,6 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
           },
         });
         const product = await getProductById(new PublicKey(productId));
-        console.log(product, "product");
         const list = tradeList.filter((item) => item.id !== productId);
         setTradeList([product as unknown as TradeCardData, ...list]);
         notify({
@@ -215,6 +218,21 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
     }
   }, []);
 
+  const onGetTrade = useCallback(async () => {
+    try {
+      const { initAccountKey } = getKeys();
+      let trade;
+      if (initAccountKey) trade = await fetchTrade(initAccountKey);
+      setIsInitContract(!trade);
+    } catch (err) {
+      console.log(err);
+      notify({
+        type: "error",
+        message: "Error with get user",
+      });
+    }
+  }, []);
+
   useEffect(() => {
     const onGetUser = async (walletAddress: string) => {
       const program = getProgram();
@@ -227,20 +245,7 @@ export const WalletProvider: React.FC<Props> = ({ children, walletAddress }) => 
         setUser(null);
       }
     };
-    const onGetTrade = async () => {
-      try {
-        const { initAccountKey } = getKeys();
-        let trade;
-        if (initAccountKey) trade = await fetchTrade(initAccountKey);
-        setIsInitContract(!trade);
-      } catch (err) {
-        console.log(err);
-        notify({
-          type: "error",
-          message: "Error with get user",
-        });
-      }
-    };
+
     walletAddress && onGetUser(walletAddress);
   }, [fetchUser, walletAddress]);
 

@@ -1,4 +1,4 @@
-import { Address, Idl, Program, Provider, web3 } from "@project-serum/anchor";
+import { Idl, Program, Provider, web3 } from "@project-serum/anchor";
 import { clusterApiUrl, Commitment, Connection, PublicKey } from "@solana/web3.js";
 import { ProductStatus, Role, TradeCardData } from "@types";
 
@@ -49,15 +49,15 @@ export async function getUser(program: Program, walletKey: string) {
   const userAccount = getUserKey(walletKey);
   try {
     const _user = await program.account.userState.fetch(userAccount.publicKey);
-  if (_user) {
-    const accountType = _user.accountType;
-    const user = {
-      id: userAccount.publicKey.toString(),
-      role: Role[Object.keys(accountType)[0] as Role],
-    };
+    if (_user) {
+      const accountType = _user.accountType;
+      const user = {
+        id: userAccount.publicKey.toString(),
+        role: Role[Object.keys(accountType)[0] as Role],
+      };
 
-    return user;
-  }
+      return user;
+    }
   } catch {}
 }
 
