@@ -35,16 +35,6 @@ anchor deploy
 ```bash
 cd app
 ```
-
-## Generate account key
-This command will generate two keypair: `initAccount-keypair.json` & `genesisAccount-keypair.json`
-
-```bash
-yarn keygen
-#or
-npm run keygen
-```
-
 ## Run the development server
 
 ```bash
@@ -53,6 +43,15 @@ yarn & yarn dev
 npm install && npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Generate account key
+This command will generate two keypair: `initAccount-keypair.json` & genesis account-keypair.json`
+
+```bash
+yarn keygen
+#or
+npm run keygen
+```
 
 Select User role
 ![](README_user_role.png)
